@@ -6,9 +6,6 @@ import re
 import os
 import webbrowser
 
-# --- CONFIGURATION ---
-# IMPORTANT: This assumes 'yt-dlp' is in the user's system PATH.
-# If not, the user must change this to the full path of the executable.
 YT_DLP_PATH = "yt-dlp"
 
 class YTDLPGUI(tk.Tk):
@@ -17,36 +14,29 @@ class YTDLPGUI(tk.Tk):
         self.title("Mr.Video Downloader")
         self.geometry("600x420")
         
-        # Variables
         self.url_var = tk.StringVar()
         self.quality_var = tk.StringVar()
         
-        # Default download directory set to a generic 'downloads' folder 
-        # inside the script's directory for release.
         self.download_dir = tk.StringVar(value=os.path.join(os.getcwd(), "downloads")) 
         self.format_options = {} 
         
-        # NEW: Define the URLs
         self.github_url = "https://github.com/DevX-Dragon"
         self.discord_url = "https://discord.gg/Buu4NCcvhx"
         
         self.create_widgets()
 
-    # NEW FUNCTION: Open Hyperlink
     def open_link(self, url):
         try:
             webbrowser.open_new(url)
         except Exception as e:
             messagebox.showerror("Link Error", f"Could not open link: {e}")
 
-    # NEW FUNCTION: Directory Selector
     def choose_directory(self):
         new_dir = filedialog.askdirectory(initialdir=self.download_dir.get())
         if new_dir:
             self.download_dir.set(new_dir)
 
     def create_widgets(self):
-        # Frame for URL Input
         url_frame = ttk.Frame(self, padding="10")
         url_frame.pack(fill='x')
         
@@ -54,7 +44,6 @@ class YTDLPGUI(tk.Tk):
         ttk.Entry(url_frame, textvariable=self.url_var, width=50).pack(side='left', fill='x', expand=True, padx=5)
         ttk.Button(url_frame, text="Analyze", command=self.analyze_video).pack(side='left')
 
-        # Frame for Directory Selection
         dir_frame = ttk.Frame(self, padding="0 10 10 0") 
         dir_frame.pack(fill='x')
         
@@ -63,7 +52,6 @@ class YTDLPGUI(tk.Tk):
         ttk.Button(dir_frame, text="Browse", command=self.choose_directory).pack(side='left')
 
 
-        # Frame for Quality Selection
         quality_frame = ttk.Frame(self, padding="10 0 10 10") 
         quality_frame.pack(fill='x')
         
@@ -72,18 +60,15 @@ class YTDLPGUI(tk.Tk):
         self.quality_dropdown.pack(side='left', fill='x', expand=True, padx=5)
         self.quality_dropdown.bind("<<ComboboxSelected>>", self.update_download_button_state)
 
-        # Download Button
         self.download_button = ttk.Button(self, text="Start Download", command=self.start_download_thread, state='disabled')
         self.download_button.pack(pady=10)
 
-        # Progress and Status Area
         self.status_text = tk.StringVar(value="Ready. Enter a URL and click Analyze.")
         ttk.Label(self, textvariable=self.status_text, wraplength=580).pack(pady=5)
         
         self.progress_bar = ttk.Progressbar(self, orient='horizontal', length=580, mode='determinate')
         self.progress_bar.pack(pady=5, padx=10)
 
-        # CREDIT TEXT AND HYPERLINKS
         credit_frame = ttk.Frame(self)
         credit_frame.pack(pady=10)
 
@@ -99,7 +84,6 @@ class YTDLPGUI(tk.Tk):
         discord_label.pack(side='left')
         discord_label.bind("<Button-1>", lambda e: self.open_link(self.discord_url))
         
-    # PHASE 1 FUNCTIONS (Analyze)
     def analyze_video(self):
         url = self.url_var.get().strip()
         if not url:
@@ -149,7 +133,6 @@ class YTDLPGUI(tk.Tk):
         else:
             self.status_text.set("Error: Could not find any downloadable formats for this URL.")
 
-    # PHASE 2 FUNCTIONS (Download)
     def start_download_thread(self):
         url = self.url_var.get().strip()
         selected_display_name = self.quality_var.get()
@@ -165,7 +148,6 @@ class YTDLPGUI(tk.Tk):
         
         threading.Thread(target=self._run_download, args=(url, format_id)).start()
 
-    # MODIFIED FUNCTION TO USE THE DOWNLOAD DIRECTORY
     def _run_download(self, url, format_id):
         
         output_template = os.path.join(self.download_dir.get(), "%(title)s.%(ext)s") 
