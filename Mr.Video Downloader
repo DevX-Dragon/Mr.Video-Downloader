@@ -5,8 +5,22 @@ import threading
 import re
 import os
 import webbrowser
+import sys # Import sys for PyInstaller path handling
 
-YT_DLP_PATH = "yt-dlp"
+# --- FUNCTION TO FIND RESOURCE PATHS ---
+def resource_path(relative_path):
+    """Get the absolute path to a resource, works for dev and for PyInstaller."""
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        # For development mode
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+# --- CONFIGURATION (UPDATED FOR BUNDLING) ---
+# YT_DLP_PATH now points to the embedded yt-dlp.exe after PyInstaller bundles it.
+YT_DLP_PATH = resource_path("yt-dlp.exe")
 
 class YTDLPGUI(tk.Tk):
     def __init__(self):
@@ -118,7 +132,7 @@ class YTDLPGUI(tk.Tk):
         except subprocess.CalledProcessError as e:
             self.after(0, lambda: self.status_text.set(f"Error analyzing: {e.stderr.strip()[:100]}"))
         except FileNotFoundError:
-            self.after(0, lambda: self.status_text.set("Error: yt-dlp command not found. Is it in your PATH?"))
+            self.after(0, lambda: self.status_text.set("Error: yt-dlp command not found. Ensure it is bundled correctly."))
         except Exception as e:
             self.after(0, lambda: self.status_text.set(f"An unexpected error occurred: {e}"))
             
