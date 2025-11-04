@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr. Video Downloader - Simple, Powerful, Free</title>
+    <!-- Tailwind CSS CDN for modern styling --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for a professional look --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117; /* GitHub Dark Mode Background */
+            color: #c9d1d9; /* GitHub Text Color */
+        }
+        .text-gradient {
+            background-image: linear-gradient(to right, #4ade80, #22c55e); /* Green gradient for headings */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        .btn-primary {
+            background-color: #238636; /* GitHub Green */
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary:hover {
+            background-color: #2ea043;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        .btn-secondary {
+            background-color: #30363d; /* Darker grey for secondary actions */
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        .btn-secondary:hover {
+            background-color: #444c56;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        .feature-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+        }
+        /* Style for code blocks in usage instructions */
+        pre {
+            background-color: #1a1e26;
+            border: 1px solid #30363d;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        code {
+            font-family: 'Roboto Mono', monospace;
+            color: #d1d9e2;
+        }
+        .section-divider {
+            margin: 4rem auto;
+            border-color: #30363d;
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-12 px-4">
+
+    <!-- Hero Section --><header class="text-center mb-16 max-w-4xl">
+        <h1 class="text-6xl md:text-7xl font-extrabold mb-4 leading-tight text-gradient">Mr. Video Downloader</h1>
+        <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            A powerful, yet simple Graphical User Interface for `yt-dlp`, designed for fast and efficient video downloads from various platforms.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <!-- Download Button --><!-- IMPORTANT: REPLACE '#' WITH THE ACTUAL LINK TO YOUR LATEST EXE FILE IN GITHUB RELEASES --><a href="#" class="btn-primary text-white font-bold py-3 px-8 rounded-lg inline-flex items-center space-x-2 text-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Download for Windows</span>
+            </a>
+            <!-- GitHub Button --><a href="https://github.com/DevX-Dragon" class="btn-secondary text-white font-bold py-3 px-8 rounded-lg inline-flex items-center space-x-2 text-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 3M9 12l-3 3"/><circle cx="12" cy="12" r="4"/><path d="M15 17.25V21"/></svg>
+                <span>View on GitHub</span>
+            </a>
+        </div>
+    </header>
+
+    <hr class="section-divider">
+
+    <!-- Screenshot Section --><section class="max-w-5xl mx-auto mb-16 px-4">
+        <h2 class="text-4xl font-bold text-center mb-8 text-white">Intuitive Interface</h2>
+        <div class="bg-[#161b22] rounded-xl p-6 border border-[#30363d] shadow-xl">
+            <!-- IMPORTANT: Replace 'gui_screenshot.png' with the actual path to your screenshot --><img src="gui_screenshot.png" alt="Mr. Video Downloader GUI Screenshot" class="rounded-lg shadow-lg w-full h-auto max-h-[500px] object-contain object-center mx-auto" loading="lazy">
+        </div>
+        <p class="text-center text-gray-500 mt-4 text-sm">A clean and straightforward design for effortless video downloads.</p>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Features Section --><section class="max-w-5xl mx-auto mb-16 px-4">
+        <h2 class="text-4xl font-bold text-center mb-12 text-white">Why Choose Mr. Video Downloader?</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature 1 --><div class="feature-card">
+                <h3 class="text-xl font-semibold text-white mb-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-400 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="12" y1="20" x2="12" y2="10"></line></svg>
+                    Standalone & Portable
+                </h3>
+                <p class="text-gray-400">Download a single `.exe` file and run it immediately. No installation, no Python, no extra dependencies needed. `yt-dlp` is bundled inside!</p>
+            </div>
+            <!-- Feature 2 --><div class="feature-card">
+                <h3 class="text-xl font-semibold text-white mb-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-400 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    Effortless Quality Selection
+                </h3>
+                <p class="text-gray-400">Simply paste your video URL, click 'Analyze', and choose from a comprehensive list of available video and audio formats and qualities.</p>
+            </div>
+            <!-- Feature 3 --><div class="feature-card">
+                <h3 class="text-xl font-semibold text-white mb-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-400 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    Powered by `yt-dlp`
+                </h3>
+                <p class="text-gray-400">Leverages the industry-standard `yt-dlp` backend for robust, reliable, and up-to-date downloading capabilities from a vast array of sites.</p>
+            </div>
+            <!-- Feature 4 --><div class="feature-card">
+                <h3 class="text-xl font-semibold text-white mb-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-400 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    Real-time Progress & Status
+                </h3>
+                <p class="text-gray-400">Stay informed with a clear progress bar and real-time status updates throughout your download process.</p>
+            </div>
+            <!-- Feature 5 --><div class="feature-card">
+                <h3 class="text-xl font-semibold text-white mb-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-400 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V3"></path></svg>
+                    Custom Download Location
+                </h3>
+                <p class="text-gray-400">Easily browse and select any folder on your computer to save your downloaded media.</p>
+            </div>
+            <!-- Feature 6 --><div class="feature-card">
+                <h3 class="text-xl font-semibold text-white mb-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-400 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                    Free to Use (Private)
+                </h3>
+                <p class="text-gray-400">Download and use Mr. Video Downloader for your personal, non-commercial needs without any cost or subscriptions.</p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- How to Use Section --><section class="max-w-4xl mx-auto mb-16 px-4">
+        <h2 class="text-4xl font-bold text-center mb-8 text-white">How to Get Started</h2>
+        <div class="bg-[#161b22] rounded-xl p-8 border border-[#30363d] shadow-xl">
+            <h3 class="text-2xl font-semibold text-white mb-4">1. Download the Executable</h3>
+            <p class="text-gray-400 mb-4">Grab the latest standalone `.exe` file directly from our GitHub Releases page. No installation required—just download and run!</p>
+            <div class="text-center mt-6 mb-8">
+                 <!-- Download Button --><!-- IMPORTANT: REPLACE '#' WITH THE ACTUAL LINK TO YOUR LATEST EXE FILE IN GITHUB RELEASES --><a href="https://github.com/DevX-Dragon/Mr.Video-Downloader/releases/tag/Windows" class="btn-primary text-white font-bold py-3 px-8 rounded-lg inline-flex items-center space-x-2 text-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <span>Download Mr. Video Downloader</span>
+                </a>
+            </div>
+
+            <h3 class="text-2xl font-semibold text-white mb-4">2. Run and Paste URL</h3>
+            <p class="text-gray-400 mb-4">Simply double-click the downloaded `.exe` file. In the application, paste your desired video URL into the provided input box.</p>
+            <pre><code class="language-bash"># Example URL
+https://www.youtube.com/watch?v=dQw4w9WgXcQ</code></pre>
+
+
+            <h3 class="text-2xl font-semibold text-white mt-8 mb-4">3. Analyze and Select Quality</h3>
+            <p class="text-gray-400 mb-4">Click the <code class="language-bash">Analyze</code> button. The application will fetch all available video and audio formats. Select your preferred quality from the dropdown menu.</p>
+            
+            <h3 class="text-2xl font-semibold text-white mt-8 mb-4">4. Start Download</h3>
+            <p class="text-gray-400 mb-4">Confirm your save location (a `downloads` folder will be created by default) and click <code class="language-bash">Start Download</code>. Monitor the progress bar and status messages.</p>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Community & Support Section --><section class="max-w-4xl mx-auto mb-16 px-4 text-center">
+        <h2 class="text-4xl font-bold text-white mb-8">Connect With Us</h2>
+        <p class="text-gray-400 mb-8">Have questions, feedback, or just want to chat? Join our community!</p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="https://github.com/DevX-Dragon" class="btn-secondary text-white font-bold py-3 px-8 rounded-lg inline-flex items-center space-x-2 text-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 3M9 12l-3 3"/><circle cx="12" cy="12" r="4"/><path d="M15 17.25V21"/></svg>
+                <span>GitHub Repository</span>
+            </a>
+            <a href="https://discord.gg/Buu4NCcvhx" class="btn-secondary text-white font-bold py-3 px-8 rounded-lg inline-flex items-center space-x-2 text-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L9.19 8.62 2 9.28l5.46 4.73L5.82 22 12 18.28l6.18 3.72-1.64-7.99L22 9.28l-7.19-.66L12 2z"/></svg>
+                <span>Join Discord</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer / Legal Section --><footer class="text-center text-gray-500 text-sm mt-12 pt-8 border-t border-[#30363d] max-w-4xl mx-auto">
+        <p>&copy; 2025 DevX-Dragon. All rights reserved.</p>
+        <p class="mt-2">This software is provided under a **Source Available - Non-Commercial Use License**. <br>
+           It may be used for private, personal purposes only. Commercial use, redistribution, and rebranding are strictly forbidden.
+        </p>
+        <p class="mt-2">Leverages the open-source <a href="https://github.com/yt-dlp/yt-dlp" class="text-green-400 hover:underline">yt-dlp</a> project.</p>
+    </footer>
+
+</body>
+</html>
+```
+
+### Important Steps After Updating `index.html`:
+
+1.  **Replace Placeholder Image:**
+    * **Create a screenshot** of your Mr. Video Downloader GUI.
+    * **Save it** as `gui_screenshot.png` (or a similar name) in the **same directory** as your `index.html` file in your GitHub repository.
+    * If you use a different filename, update the `src` attribute in the `<img>` tag:
+        ```html
+        <img src="Screenshot.png" alt="Mr. Video Downloader GUI Screenshot" ...>
+        
