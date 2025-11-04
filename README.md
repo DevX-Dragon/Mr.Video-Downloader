@@ -64,10 +64,10 @@ Use: Follow the simple steps outlined in the How to Use the Application section 
 
 ## ⚖️ License and Usage
 
-This project is open-source and released under the MIT License.
+This project is open-source and released under the Source Available - Non-Commercial Use License
 
 Private Use: You are free to use this application for personal, private purposes.
 
-Attribution Required: If you redistribute, modify, or use this source code in any way, you must include clear attribution to the original author (DevX-Dragon) and link back to this repository.
+Attribution Required: If you redistribute, modify, or use this source code in any way, you must include clear attribution to the original author (DevX-Dragon) and link back to this repository. 
 
 No Rebranding: You may not distribute the application and claim it as your own original product. All derivative works must clearly distinguish themselves from the "Mr. Video Downloader" name and branding.
