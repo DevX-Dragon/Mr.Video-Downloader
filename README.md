@@ -1,85 +1,73 @@
-Mr. Video Downloader
+# **Mr. Video Downloader**
 
-A simple, user-friendly desktop application (GUI) built with Python and Tkinter for downloading videos from various online sources using the powerful yt-dlp utility.
+## 🚀 **Overview**
 
-The application allows users to analyze a video URL, select the desired format and quality, and track the download progress in real-time.
+This is the source code repository for Mr. Video Downloader, a user-friendly Graphical Interface (GUI) built with Python and Tkinter. This application acts as a front-end wrapper for the powerful command-line tool, yt-dlp, making it simple and intuitive to download videos by URL.
 
-✨ Features
+## ✨ Key Features
 
-Single-File Download: The application is distributed as a single executable (EXE) for Windows, containing all necessary dependencies, including yt-dlp.
+GUI Interface: Easy-to-use desktop application built with Tkinter.
+Fully Bundled (in Releases): The compiled Windows executable (found in the Releases section) includes the yt-dlp core utility.
+Quality Analysis: Analyze video URLs to fetch a full list of available formats and quality options.
+Real-time Progress: Track your downloads with a responsive progress bar.
 
-Format Analysis: Automatically analyzes video URLs and presents a list of available quality and format options.
+## 💻 Local Setup (Running from Source)
 
-Progress Bar: Real-time progress tracking of the download process.
+If you wish to run the application directly from the source code, you must have Python installed and install the required dependencies.
+Prerequisites
 
-Custom Directory: Easy selection of the download destination folder.
+- Python 3.x
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp) (The core video downloader utility)
 
-🚀 Getting Started (Using the Release EXE)
+Installation Steps
 
-This is the fastest way to use the application, as it requires no external installation of Python or dependencies.
+Clone the Repository:
+```cmd
+git clone [https://github.com/DevX-Dragon/Mr.Video-Downloader.git](https://github.com/DevX-Dragon/Mr.Video-Downloader.git)
+cd Mr.Video-Downloader
+```
 
-1. Download
-
-Navigate to the Releases page of this repository.
-
-Download the latest release file, typically named Mr. Video Downloader.exe.
-
-2. Run
-
-Simply double-click the Mr. Video Downloader.exe file.
-
-Note: The application will create a folder named downloads in the same directory where the EXE is located to use as the default save location.
-
-💻 Running from Source / Development
-
-If you wish to modify the code, build the application yourself, or run it on a non-Windows environment, follow these steps.
-
-1. Prerequisites
-
-You must have Python 3.x installed.
-
-2. Setup
-
-Install the necessary Python package (yt-dlp is required for execution, though it is usually included in the system PATH or the compiled executable):
-
+Install yt-dlp:
+```python
 pip install yt-dlp
+```
+(Note: If you run into issues, ensure yt-dlp is installed and accessible in your system's PATH.)
 
-
-3. Execution
-
-You can run the script directly using Python:
-
+Run the Application:
+```python
 python your_script_name.py
+```
 
+## 📝 How to Use the Application
 
-(Replace your_script_name.py with the actual name of the file)
+Once the application is running (either from source or via the standalone EXE):
 
-4. Compiling the Standalone EXE
+Analyze: Paste a video URL into the input field and click "Analyze" to fetch available quality options.
 
-To rebuild the single-file executable, you will need PyInstaller. This process automatically embeds the yt-dlp.exe binary into your final application.
+Select: Choose your desired video format/quality from the dropdown menu.
 
-Install PyInstaller
+Download: Click "Start Download".
 
-pip install pyinstaller
+The application will automatically create a downloads folder next to the executable/script to save your videos.
 
+🚀 Standalone EXE (For End Users)
 
-The Build Command
+For the easiest experience, end-users should download the compiled, self-contained Windows executable from the Releases page. No external dependencies are required for the EXE version.
 
-Ensure you have the latest yt-dlp.exe binary in the same folder as your Python script. Then, run the following command:
+Quick Start
 
-pyinstaller --onefile --windowed --add-data "yt-dlp.exe:." your_script_name.py
+Download: Get the Mr. Video Downloader.exe from the [Releases](https://github.com/DevX-Dragon/Mr.Video-Downloader/releases/tag/Windows) section.
 
+Run: Double-click the EXE file to start the application immediately.
 
-The --onefile flag creates a single EXE.
+Use: Follow the simple steps outlined in the How to Use the Application section above.
 
-The --windowed flag prevents a console window from opening.
+## ⚖️ License and Usage
 
-The --add-data "yt-dlp.exe:." flag is crucial—it embeds the external yt-dlp.exe binary so the app can run it via subprocess.
+This project is open-source and released under the MIT License.
 
-The final Mr. Video Downloader.exe will be located in the dist/ folder.
+Private Use: You are free to use this application for personal, private purposes.
 
-🤝 Credits
+Attribution Required: If you redistribute, modify, or use this source code in any way, you must include clear attribution to the original author (DevX-Dragon) and link back to this repository.
 
-Developer: Mr.Video (DevX-Dragon)
-
-Core Technology: This application is built around the excellent yt-dlp project.
+No Rebranding: You may not distribute the application and claim it as your own original product. All derivative works must clearly distinguish themselves from the "Mr. Video Downloader" name and branding.
