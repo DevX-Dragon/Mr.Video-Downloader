@@ -35,7 +35,7 @@ pip install yt-dlp
 
 Run the Application:
 ```python
-python your_script_name.py
+python Mr.Video-Downloader.py
 ```
 
 ## 📝 How to Use the Application
