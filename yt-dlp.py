@@ -1,0 +1,230 @@
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
+import subprocess
+import threading
+import re
+import os
+import webbrowser
+
+# --- CONFIGURATION ---
+# IMPORTANT: This assumes 'yt-dlp' is in the user's system PATH.
+# If not, the user must change this to the full path of the executable.
+YT_DLP_PATH = "yt-dlp"
+
+class YTDLPGUI(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Mr.Video Downloader")
+        self.geometry("600x420")
+        
+        # Variables
+        self.url_var = tk.StringVar()
+        self.quality_var = tk.StringVar()
+        
+        # Default download directory set to a generic 'downloads' folder 
+        # inside the script's directory for release.
+        self.download_dir = tk.StringVar(value=os.path.join(os.getcwd(), "downloads")) 
+        self.format_options = {} 
+        
+        # NEW: Define the URLs
+        self.github_url = "https://github.com/DevX-Dragon"
+        self.discord_url = "https://discord.gg/Buu4NCcvhx"
+        
+        self.create_widgets()
+
+    # NEW FUNCTION: Open Hyperlink
+    def open_link(self, url):
+        try:
+            webbrowser.open_new(url)
+        except Exception as e:
+            messagebox.showerror("Link Error", f"Could not open link: {e}")
+
+    # NEW FUNCTION: Directory Selector
+    def choose_directory(self):
+        new_dir = filedialog.askdirectory(initialdir=self.download_dir.get())
+        if new_dir:
+            self.download_dir.set(new_dir)
+
+    def create_widgets(self):
+        # Frame for URL Input
+        url_frame = ttk.Frame(self, padding="10")
+        url_frame.pack(fill='x')
+        
+        ttk.Label(url_frame, text="Video URL:").pack(side='left', padx=5)
+        ttk.Entry(url_frame, textvariable=self.url_var, width=50).pack(side='left', fill='x', expand=True, padx=5)
+        ttk.Button(url_frame, text="Analyze", command=self.analyze_video).pack(side='left')
+
+        # Frame for Directory Selection
+        dir_frame = ttk.Frame(self, padding="0 10 10 0") 
+        dir_frame.pack(fill='x')
+        
+        ttk.Label(dir_frame, text="Save To:").pack(side='left', padx=5)
+        ttk.Entry(dir_frame, textvariable=self.download_dir, width=50, state='readonly').pack(side='left', fill='x', expand=True, padx=5)
+        ttk.Button(dir_frame, text="Browse", command=self.choose_directory).pack(side='left')
+
+
+        # Frame for Quality Selection
+        quality_frame = ttk.Frame(self, padding="10 0 10 10") 
+        quality_frame.pack(fill='x')
+        
+        ttk.Label(quality_frame, text="Quality/Format:").pack(side='left', padx=5)
+        self.quality_dropdown = ttk.Combobox(quality_frame, textvariable=self.quality_var, width=40, state='readonly')
+        self.quality_dropdown.pack(side='left', fill='x', expand=True, padx=5)
+        self.quality_dropdown.bind("<<ComboboxSelected>>", self.update_download_button_state)
+
+        # Download Button
+        self.download_button = ttk.Button(self, text="Start Download", command=self.start_download_thread, state='disabled')
+        self.download_button.pack(pady=10)
+
+        # Progress and Status Area
+        self.status_text = tk.StringVar(value="Ready. Enter a URL and click Analyze.")
+        ttk.Label(self, textvariable=self.status_text, wraplength=580).pack(pady=5)
+        
+        self.progress_bar = ttk.Progressbar(self, orient='horizontal', length=580, mode='determinate')
+        self.progress_bar.pack(pady=5, padx=10)
+
+        # CREDIT TEXT AND HYPERLINKS
+        credit_frame = ttk.Frame(self)
+        credit_frame.pack(pady=10)
+
+        ttk.Label(credit_frame, text="Created by Mr.Video | ").pack(side='left')
+
+        github_label = ttk.Label(credit_frame, text="GitHub", foreground="blue", cursor="hand2")
+        github_label.pack(side='left')
+        github_label.bind("<Button-1>", lambda e: self.open_link(self.github_url))
+
+        ttk.Label(credit_frame, text=" | ").pack(side='left')
+
+        discord_label = ttk.Label(credit_frame, text="Discord", foreground="blue", cursor="hand2")
+        discord_label.pack(side='left')
+        discord_label.bind("<Button-1>", lambda e: self.open_link(self.discord_url))
+        
+    # PHASE 1 FUNCTIONS (Analyze)
+    def analyze_video(self):
+        url = self.url_var.get().strip()
+        if not url:
+            self.status_text.set("Error: Please enter a valid URL.")
+            return
+
+        self.status_text.set("Analyzing video formats...")
+        self.download_button.config(state='disabled')
+        self.quality_dropdown.config(values=[])
+        self.format_options = {}
+        
+        threading.Thread(target=self._run_analysis, args=(url,)).start()
+
+    def _run_analysis(self, url):
+        try:
+            command = [YT_DLP_PATH, "-F", url]
+            process = subprocess.run(command, capture_output=True, text=True, check=True, encoding='utf-8')
+            output_lines = process.stdout.splitlines()
+            
+            new_formats = {"Best Available (Default)": "best"}
+            
+            for line in output_lines:
+                match = re.search(r"(\d+|best|worst)\s+\w+\s+(\S+)\s+.*", line.strip())
+                if match:
+                    format_id = match.group(1)
+                    info = line.strip().split(maxsplit=2)[-1]
+                    display_name = f"[{format_id}] {info}"
+                    new_formats[display_name] = format_id
+
+            self.after(0, lambda: self._update_formats(new_formats))
+
+        except subprocess.CalledProcessError as e:
+            self.after(0, lambda: self.status_text.set(f"Error analyzing: {e.stderr.strip()[:100]}"))
+        except FileNotFoundError:
+            self.after(0, lambda: self.status_text.set("Error: yt-dlp command not found. Is it in your PATH?"))
+        except Exception as e:
+            self.after(0, lambda: self.status_text.set(f"An unexpected error occurred: {e}"))
+            
+    def _update_formats(self, new_formats):
+        if len(new_formats) > 1:
+            self.format_options = new_formats
+            display_names = list(new_formats.keys())
+            self.quality_dropdown.config(values=display_names)
+            self.quality_var.set(display_names[0]) 
+            self.download_button.config(state='normal')
+            self.status_text.set(f"Analysis complete. Found {len(display_names) - 1} formats. Choose quality and download.")
+        else:
+            self.status_text.set("Error: Could not find any downloadable formats for this URL.")
+
+    # PHASE 2 FUNCTIONS (Download)
+    def start_download_thread(self):
+        url = self.url_var.get().strip()
+        selected_display_name = self.quality_var.get()
+        
+        if not url or not selected_display_name or not self.download_dir.get():
+            self.status_text.set("Error: Please analyze a URL, select a format, and ensure a download directory is set.")
+            return
+
+        format_id = self.format_options.get(selected_display_name)
+        
+        self.download_button.config(state='disabled')
+        self.quality_dropdown.config(state='disabled')
+        
+        threading.Thread(target=self._run_download, args=(url, format_id)).start()
+
+    # MODIFIED FUNCTION TO USE THE DOWNLOAD DIRECTORY
+    def _run_download(self, url, format_id):
+        
+        output_template = os.path.join(self.download_dir.get(), "%(title)s.%(ext)s") 
+
+        command = [
+            YT_DLP_PATH,
+            "-f", format_id,
+            url,
+            "-o", output_template,
+            "--newline" 
+        ]
+        
+        try:
+            self.status_text.set(f"Starting download to: {self.download_dir.get()}...")
+            self.progress_bar['value'] = 0
+            
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1, universal_newlines=True)
+
+            for line in iter(process.stdout.readline, ''):
+                progress_match = re.search(r"(\d+\.\d+)%", line)
+                status_match = re.search(r"\[download\] (.+)", line)
+                
+                if progress_match:
+                    percent = float(progress_match.group(1))
+                    self.after(0, lambda p=percent: self.progress_bar.config(value=p))
+                
+                if status_match:
+                    status_info = status_match.group(1)
+                    self.after(0, lambda s=status_info: self.status_text.set(f"Downloading: {s}"))
+                
+                if process.poll() is not None:
+                    break
+
+            process.stdout.close()
+            return_code = process.wait()
+
+            if return_code == 0:
+                self.after(0, lambda: self.status_text.set("🎉 Download Complete!"))
+            else:
+                self.after(0, lambda: self.status_text.set(f"Download Failed (Error Code: {return_code}). Check logs for details."))
+
+        except Exception as e:
+            self.after(0, lambda: self.status_text.set(f"An unexpected error occurred during download: {e}"))
+
+        self.after(0, lambda: self.download_button.config(state='normal'))
+        self.after(0, lambda: self.quality_dropdown.config(state='readonly'))
+
+    def update_download_button_state(self, event):
+        if self.quality_var.get():
+            self.download_button.config(state='normal')
+
+if __name__ == "__main__":
+    default_dir = os.path.join(os.getcwd(), "downloads")
+    if not os.path.exists(default_dir):
+        try:
+            os.makedirs(default_dir)
+            print(f"Created default directory: {default_dir}")
+        except Exception as e:
+            print(f"Warning: Could not create default directory {default_dir}: {e}")
+            
+    app = YTDLPGUI()
+    app.mainloop()
